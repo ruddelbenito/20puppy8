@@ -1,0 +1,15 @@
+.grid {
+    display: flex;
+    flex-direction: column;
+}
+
+.tile {
+    border: 1px solid black;
+    width: 5rem;
+    height: 5rem;
+}
+
+.row {
+    display: flex;
+    width: fit-content;
+}
