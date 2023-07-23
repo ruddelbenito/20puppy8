@@ -10,6 +10,35 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <h1>20puppy8</h1>
+
+      {/* grid */}
+      <div className={styles.grid}>
+        <div className={styles.row}>
+          <div className={styles.tile}></div>
+          <div className={styles.tile}></div>
+          <div className={styles.tile}></div>
+          <div className={styles.tile}></div>
+        </div>
+        <div className={styles.row}>
+          <div className={styles.tile}></div>
+          <div className={styles.tile}></div>
+          <div className={styles.tile}></div>
+          <div className={styles.tile}></div>
+        </div>
+        <div className={styles.row}>
+          <div className={styles.tile}></div>
+          <div className={styles.tile}></div>
+          <div className={styles.tile}></div>
+          <div className={styles.tile}></div>
+        </div>
+        <div className={styles.row}>
+          <div className={styles.tile}></div>
+          <div className={styles.tile}></div>
+          <div className={styles.tile}></div>
+          <div className={styles.tile}></div>
+        </div>
+      </div>
+
     </main>
   )
 }
