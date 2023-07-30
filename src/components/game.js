@@ -1,3 +1,5 @@
+import styles from './game.module.css'
+
 // function to set a value to either 2 or 4
 let getNewNumber = () => {
     // Randomly generate a 0 or 1
@@ -60,6 +62,12 @@ let initializeBoard = () => {
 
 function Game() {
     let grid = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
+
+    return (
+        <div className={styles.game}>
+
+        </div>
+    )
 }
 
 export default Game;
