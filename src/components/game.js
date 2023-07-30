@@ -1,3 +1,5 @@
+'use client'
+
 import styles from './game.module.css'
 
 // function to set a value to either 2 or 4
@@ -65,7 +67,20 @@ function Game() {
 
     return (
         <div className={styles.game}>
-
+            {grid.map((row, rowIndex) => {
+                return (
+                    <div className={styles.row} key={`${rowIndex}`}>
+                        {row.map((square, squareIndex) => {
+                            return (
+                                <div className={styles.square} key={`${rowIndex}-${squareIndex}`}>
+                                    <p>value: {grid[rowIndex][squareIndex]}</p>
+                                    <p className={styles.squareContent}>{rowIndex}, {squareIndex}</p>
+                                </div>
+                            )
+                        })}
+                    </div>
+                )
+            })}
         </div>
     )
 }

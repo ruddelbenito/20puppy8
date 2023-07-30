@@ -1,0 +1,14 @@
+.row {
+    display: flex;
+}
+
+.square {
+    border: 1px solid black;
+    width: 5rem;
+    height: 5rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
