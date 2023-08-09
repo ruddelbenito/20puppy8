@@ -1,7 +1,7 @@
 'use client'
 
 import styles from './game.module.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 // function to set a value to either 2 or 4
 let getNewNumber = () => {
@@ -65,7 +65,12 @@ let initializeBoard = () => {
 
 function Game() {
     const [newValue, setNewValue] = useState(0);
-    let grid = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
+    const [grid, setGrid] = useState([[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]])
+
+    // initialize board on game start
+    useEffect(() => {
+        console.log('hello, the page just loaded for the first time')
+    }, [])
 
     return (
         <div className={styles.game}>
@@ -82,8 +87,14 @@ function Game() {
                     </div>
                 )
             })}
-            <button onClick={(e) => { setNewValue(getNewNumber()) }}>test random value here</button>
-            <p>randomly generated value: {newValue !== 0 ? newValue : 'No value generated yet'}</p>
+
+            {/* Random number generation testing */}
+            <div>
+                <button onClick={(e) => { setNewValue(getNewNumber()) }}>test random value here</button>
+                <p>randomly generated value: {newValue !== 0 ? newValue : 'No value generated yet'}</p>
+            </div>
+
+            {/* Event listener - keypress testing */}
         </div>
     )
 }
