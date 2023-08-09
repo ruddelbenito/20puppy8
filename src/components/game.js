@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react'
 function Game() {
 
     const [newValue, setNewValue] = useState(0);
-    const [grid, setGrid] = useState([[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]])
+    const [grid, setGrid] = useState([[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]);
 
     // function to set a value to either 2 or 4
     let getNewNumber = () => {
@@ -16,16 +16,19 @@ function Game() {
         let randomNumber = Math.floor(Math.random() * 2);
 
         if (randomNumber === 0) {
-            return 2
+            return 2;
         }
         else {
-            return 4
+            return 4;
         }
     }
 
     // function to set a board space to a value
     let setTileValue = (position, value) => {
-        grid[position[0]][position[1]] = value;
+        // grid[position[0]][position[1]] = value;
+        let tempGrid = [...grid];
+        tempGrid[position[0]][position[1]] = value;
+        setGrid(tempGrid);
     }
 
     // function to randomly set an empty board space to a value of 2 or 4
@@ -45,6 +48,7 @@ function Game() {
         }
 
         // once empty tile is found, assign it a value of 2 or 4
+        console.log(`grid: ${xCoord}, ${yCoord}`)
         setTileValue([xCoord, yCoord], getNewNumber);
 
     }
@@ -70,8 +74,9 @@ function Game() {
 
     // initialize board on game start
     useEffect(() => {
-        console.log('hello, the page just loaded for the first time')
-    }, [])
+        console.log('hello, the page just loaded for the first time');
+        initializeBoard();
+    }, []);
 
     return (
         <div className={styles.game}>
@@ -97,7 +102,7 @@ function Game() {
 
             {/* Event listener - keypress testing */}
         </div>
-    )
+    );
 }
 
 export default Game;
