@@ -3,69 +3,70 @@
 import styles from './game.module.css'
 import { useState, useEffect } from 'react'
 
-// function to set a value to either 2 or 4
-let getNewNumber = () => {
-    // Randomly generate a 0 or 1
-    //  - if random generated number is a 0, the value of the square is a 2
-    //  - if random generated number is a 1, the value of the square is a 4
-    let randomNumber = Math.floor(Math.random() * 2);
+function Game() {
 
-    if (randomNumber === 0) {
-        return 2
-    }
-    else {
-        return 4
-    }
-}
+    const [newValue, setNewValue] = useState(0);
+    const [grid, setGrid] = useState([[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]])
 
-// function to set a board space to a value
-let setTileValue = (position, value) => {
-    grid[position[0]][position[1]] = value;
-}
+    // function to set a value to either 2 or 4
+    let getNewNumber = () => {
+        // Randomly generate a 0 or 1
+        //  - if random generated number is a 0, the value of the square is a 2
+        //  - if random generated number is a 1, the value of the square is a 4
+        let randomNumber = Math.floor(Math.random() * 2);
 
-// function to randomly set an empty board space to a value of 2 or 4
-let assignEmptyTile = () => {
-    let emptyTileFound = false;
-    let xCoord;
-    let yCoord;
-
-    // repeatedly attempt to find a position on the grid that is empty
-    while (!emptyTileFound) {
-        xCoord = Math.floor(Math.random() * 4);
-        yCoord = Math.floor(Math.random() * 4);
-
-        if (grid[xCoord][yCoord] === 0) {
-            emptyTileFound = true;
+        if (randomNumber === 0) {
+            return 2
+        }
+        else {
+            return 4
         }
     }
 
-    // once empty tile is found, assign it a value of 2 or 4
-    setTileValue([xCoord, yCoord], getNewNumber);
+    // function to set a board space to a value
+    let setTileValue = (position, value) => {
+        grid[position[0]][position[1]] = value;
+    }
 
-}
+    // function to randomly set an empty board space to a value of 2 or 4
+    let assignEmptyTile = () => {
+        let emptyTileFound = false;
+        let xCoord;
+        let yCoord;
 
-// function to initialize board (determine first two tiles and their values)
-let initializeBoard = () => {
-    assignEmptyTile();
-    assignEmptyTile();
-}
+        // repeatedly attempt to find a position on the grid that is empty
+        while (!emptyTileFound) {
+            xCoord = Math.floor(Math.random() * 4);
+            yCoord = Math.floor(Math.random() * 4);
 
-// function to merge two spaces if they are adjacent and the same value
+            if (grid[xCoord][yCoord] === 0) {
+                emptyTileFound = true;
+            }
+        }
 
-// function to shift spaces up
+        // once empty tile is found, assign it a value of 2 or 4
+        setTileValue([xCoord, yCoord], getNewNumber);
 
-// function to shift spaces down
+    }
 
-// function to shift spaces left
+    // function to initialize board (determine first two tiles and their values)
+    let initializeBoard = () => {
+        assignEmptyTile();
+        assignEmptyTile();
+    }
 
-// function to shift spaces right
+    // function to merge two spaces if they are adjacent and the same value
 
-// NOTES:
-//    - somehow keep track of empty coordinates - repeatedly doing random and checking if value is 0 is silly
+    // function to shift spaces up
 
-function Game() {
-    const [newValue, setNewValue] = useState(0);
-    const [grid, setGrid] = useState([[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]])
+    // function to shift spaces down
+
+    // function to shift spaces left
+
+    // function to shift spaces right
+
+    // NOTES:
+    //    - somehow keep track of empty coordinates - repeatedly doing random and checking if value is 0 is silly
 
     // initialize board on game start
     useEffect(() => {
