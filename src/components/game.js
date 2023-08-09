@@ -1,6 +1,7 @@
 'use client'
 
 import styles from './game.module.css'
+import { useState } from 'react'
 
 // function to set a value to either 2 or 4
 let getNewNumber = () => {
@@ -10,10 +11,10 @@ let getNewNumber = () => {
     let randomNumber = Math.floor(Math.random() * 2);
 
     if (randomNumber === 0) {
-        return 2;
+        return 2
     }
     else {
-        return 4;
+        return 4
     }
 }
 
@@ -63,6 +64,7 @@ let initializeBoard = () => {
 //    - somehow keep track of empty coordinates - repeatedly doing random and checking if value is 0 is silly
 
 function Game() {
+    const [newValue, setNewValue] = useState(0);
     let grid = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
 
     return (
@@ -80,6 +82,8 @@ function Game() {
                     </div>
                 )
             })}
+            <button onClick={(e) => { setNewValue(getNewNumber()) }}>test random value here</button>
+            <p>randomly generated value: {newValue !== 0 ? newValue : 'No value generated yet'}</p>
         </div>
     )
 }
