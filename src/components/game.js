@@ -74,7 +74,6 @@ function Game() {
                             return (
                                 <div className={styles.square} key={`${rowIndex}-${squareIndex}`}>
                                     <p>value: {grid[rowIndex][squareIndex]}</p>
-                                    <p className={styles.squareContent}>{rowIndex}, {squareIndex}</p>
                                 </div>
                             )
                         })}
