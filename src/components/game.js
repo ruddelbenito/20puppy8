@@ -15,17 +15,11 @@ function Game() {
         //  - if random generated number is a 1, the value of the square is a 4
         let randomNumber = Math.floor(Math.random() * 2);
 
-        if (randomNumber === 0) {
-            return 2;
-        }
-        else {
-            return 4;
-        }
+        return (randomNumber === 0 ? 2 : 4)
     }
 
     // function to set a board space to a value
     let setTileValue = (position, value) => {
-        // grid[position[0]][position[1]] = value;
         let tempGrid = [...grid];
         tempGrid[position[0]][position[1]] = value;
         setGrid(tempGrid);
@@ -48,8 +42,8 @@ function Game() {
         }
 
         // once empty tile is found, assign it a value of 2 or 4
-        console.log(`grid: ${xCoord}, ${yCoord}`)
-        setTileValue([xCoord, yCoord], getNewNumber);
+        // console.log(`grid: ${xCoord}, ${yCoord}`)
+        setTileValue([xCoord, yCoord], getNewNumber());
 
     }
 
@@ -74,7 +68,7 @@ function Game() {
 
     // initialize board on game start
     useEffect(() => {
-        console.log('hello, the page just loaded for the first time');
+        // console.log('hello, the page just loaded for the first time');
         initializeBoard();
     }, []);
 
