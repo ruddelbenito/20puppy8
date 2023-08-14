@@ -10,17 +10,17 @@ function Game() {
 
     function checkKey(e) {
 
-        if (e.keyCode == '38') {
-            console.log('up arrow');
+        if (e.keyCode == '38' || e.keyCode == '87') {
+            console.log('up');
         }
-        else if (e.keyCode == '40') {
-            console.log('down arrow');
+        else if (e.keyCode == '40' || e.keyCode == '83') {
+            console.log('down');
         }
-        else if (e.keyCode == '37') {
-            console.log('left arrow');
+        else if (e.keyCode == '37' || e.keyCode == '65') {
+            console.log('left');
         }
-        else if (e.keyCode == '39') {
-            console.log('right arrow');
+        else if (e.keyCode == '39' || e.keyCode == '68') {
+            console.log('right');
         }
     }
 
