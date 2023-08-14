@@ -80,17 +80,32 @@ function Game() {
 
     // function to shift spaces left
     let moveLeft = () => {
-        grid.forEach((row) => {
-            // console.log(row);
-            let emptySpace = -1;
-            let currentNonEmptyTile = -1;
-            row.forEach((value, index) => {
-                // mark the leftmost empty tile
-                // mark the value of current non-empty tile
-                // check current tile
-                //      - if empty and not the current marked empty tile, skip and go to next
-                //      - if not empty, 
-            })
+        // loop through each row
+        grid.forEach((row, rowIndex) => {
+            let lastEmptySpace = 0;
+            let lastNonEmptySpace = -1;
+            let lastNonEmptySpaceValue = -1;
+
+            // loop through every space in each row
+            for (let space = 0; space < row.length; space++) {
+                // if the value of a space is 0
+                if (row[space] === 0) {
+                    // if no empty space has been determined yet
+                    if (lastEmptySpace === -1) {
+                        lastEmptySpace = space;
+                    }
+                }
+                // if the value of a space is not 0
+                else {
+                    setTileValue([rowIndex, lastEmptySpace], row[space]);
+                    // if the space being moved is not the first space, change the value of its original position to 0
+                    // and increment the last empty space by 1 for possible upcoming shifts
+                    if (space !== 0) {
+                        setTileValue([rowIndex, space], 0);
+                        lastEmptySpace++;
+                    }
+                }
+            }
         });
     }
 
