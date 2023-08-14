@@ -108,14 +108,6 @@ function Game() {
                     </div>
                 )
             })}
-
-            {/* Random number generation testing */}
-            <div>
-                <button onClick={(e) => { setNewValue(getNewNumber()) }}>test random value here</button>
-                <p>randomly generated value: {newValue !== 0 ? newValue : 'No value generated yet'}</p>
-            </div>
-
-            {/* Event listener - keypress testing */}
         </div>
     );
 }
