@@ -1,3 +1,7 @@
+.game:focus {
+    outline: none;
+}
+
 .row {
     display: flex;
 }
