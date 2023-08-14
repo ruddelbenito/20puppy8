@@ -4,7 +4,7 @@ import styles from './game.module.css'
 import { useState, useEffect } from 'react'
 
 function Game() {
-    const [grid, setGrid] = useState([[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]);
+    const [grid, setGrid] = useState([[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 2, 0], [0, 0, 0, 0]]);
 
     function checkKey(e) {
 
@@ -80,6 +80,7 @@ function Game() {
 
     // function to shift spaces left
     let moveLeft = () => {
+
         // loop through each row
         grid.forEach((row, rowIndex) => {
             let lastEmptySpace = 0;
@@ -88,6 +89,7 @@ function Game() {
 
             // loop through every space in each row
             for (let space = 0; space < row.length; space++) {
+
                 // if the value of a space is 0
                 if (row[space] === 0) {
                     // if no empty space has been determined yet
@@ -95,15 +97,43 @@ function Game() {
                         lastEmptySpace = space;
                     }
                 }
+
                 // if the value of a space is not 0
                 else {
-                    setTileValue([rowIndex, lastEmptySpace], row[space]);
-                    // if the space being moved is not the first space, change the value of its original position to 0
-                    // and increment the last empty space by 1 for possible upcoming shifts
-                    if (space !== 0) {
-                        setTileValue([rowIndex, space], 0);
-                        lastEmptySpace++;
+
+                    // check if a non-empty space has been previously determined
+                    // if not, set current space and its value for potential merging
+                    if (lastNonEmptySpace === -1 && lastNonEmptySpaceValue === -1) {
+                        lastNonEmptySpace = space;
+                        lastNonEmptySpaceValue = row[space];
                     }
+
+                    // if one has been previously determined, check if current non-empty space is the same value
+                    else {
+                        if (lastNonEmptySpaceValue === row[space]) {
+
+                            // if there are empty spaces to the left of the merging space, move all to left when merging
+                            if (lastEmptySpace < lastNonEmptySpace) {
+                                setTileValue([rowIndex, lastEmptySpace], lastNonEmptySpaceValue * 2);
+                                // clear the two tiles that were to be merged
+                                setTileValue([rowIndex, lastNonEmptySpace], 0);
+                                setTileValue([rowIndex, row[space]], 0);
+                                // increment the last empty space by 1
+                                lastEmptySpace++;
+                            }
+
+                            // if there are no empty spaces to the left of the merging space, simply merge the two tiles
+                            else {
+                                setTileValue([rowIndex, lastNonEmptySpace], lastNonEmptySpaceValue * 2);
+                                // clear the tile to the right
+                                setTileValue([rowIndex, row[space]], 0);
+                                // set the last empty space to the now cleared tile
+                                lastEmptySpace = space;
+                            }
+                        }
+                    }
+
+
                 }
             }
         });
@@ -122,7 +152,7 @@ function Game() {
     // initialize board on game start
     useEffect(() => {
         // console.log('hello, the page just loaded for the first time');
-        initializeBoard();
+        // initializeBoard();
     }, []);
 
     return (
