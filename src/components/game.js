@@ -94,6 +94,7 @@ function Game() {
             onKeyDown={(e) => checkKey(e)}
             tabIndex={-1}
         >
+            <h1>20puppy8</h1>
             {grid.map((row, rowIndex) => {
                 return (
                     <div className={styles.row} key={`${rowIndex}`}>

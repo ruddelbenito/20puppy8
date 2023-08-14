@@ -5,7 +5,6 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      <h1>20puppy8</h1>
       <Game />
     </main>
   )
