@@ -4,8 +4,6 @@ import styles from './game.module.css'
 import { useState, useEffect } from 'react'
 
 function Game() {
-
-    const [newValue, setNewValue] = useState(0);
     const [grid, setGrid] = useState([[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]);
 
     function checkKey(e) {
@@ -18,6 +16,7 @@ function Game() {
         }
         else if (e.keyCode == '37' || e.keyCode == '65') {
             console.log('left');
+            moveLeft();
         }
         else if (e.keyCode == '39' || e.keyCode == '68') {
             console.log('right');
@@ -69,15 +68,38 @@ function Game() {
         assignEmptyTile();
     }
 
-    // function to merge two spaces if they are adjacent and the same value
-
     // function to shift spaces up
+    let moveUp = () => {
+
+    }
 
     // function to shift spaces down
+    let moveDown = () => {
+
+    }
 
     // function to shift spaces left
+    let moveLeft = () => {
+        grid.forEach((row) => {
+            // console.log(row);
+            let emptySpace = -1;
+            let currentNonEmptyTile = -1;
+            row.forEach((value, index) => {
+                // mark the leftmost empty tile
+                // mark the value of current non-empty tile
+                // check current tile
+                //      - if empty and not the current marked empty tile, skip and go to next
+                //      - if not empty, 
+            })
+        });
+    }
 
     // function to shift spaces right
+    let moveRight = () => {
+
+    }
+
+    // function to merge two spaces if they are beside each other
 
     // NOTES:
     //    - somehow keep track of empty coordinates - repeatedly doing random and checking if value is 0 is silly
@@ -101,7 +123,7 @@ function Game() {
                         {row.map((square, squareIndex) => {
                             return (
                                 <div className={styles.square} key={`${rowIndex}-${squareIndex}`}>
-                                    <p>value: {grid[rowIndex][squareIndex]}</p>
+                                    <p>{grid[rowIndex][squareIndex]}</p>
                                 </div>
                             )
                         })}
