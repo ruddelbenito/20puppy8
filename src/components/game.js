@@ -8,6 +8,22 @@ function Game() {
     const [newValue, setNewValue] = useState(0);
     const [grid, setGrid] = useState([[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]);
 
+    function checkKey(e) {
+
+        if (e.keyCode == '38') {
+            console.log('up arrow');
+        }
+        else if (e.keyCode == '40') {
+            console.log('down arrow');
+        }
+        else if (e.keyCode == '37') {
+            console.log('left arrow');
+        }
+        else if (e.keyCode == '39') {
+            console.log('right arrow');
+        }
+    }
+
     // function to set a value to either 2 or 4
     let getNewNumber = () => {
         // Randomly generate a 0 or 1
@@ -73,7 +89,11 @@ function Game() {
     }, []);
 
     return (
-        <div className={styles.game}>
+        <div
+            className={styles.game}
+            onKeyDown={(e) => checkKey(e)}
+            tabIndex={-1}
+        >
             {grid.map((row, rowIndex) => {
                 return (
                     <div className={styles.row} key={`${rowIndex}`}>
