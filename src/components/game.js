@@ -4,7 +4,7 @@ import styles from './game.module.css'
 import { useState, useEffect } from 'react'
 
 function Game() {
-    const [grid, setGrid] = useState([[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 2, 0], [0, 0, 0, 0]]);
+    const [grid, setGrid] = useState([[0, 2, 0, 2], [4, 0, 0, 0], [0, 0, 0, 0], [0, 0, 2, 0]]);
 
     function checkKey(e) {
 
@@ -80,71 +80,92 @@ function Game() {
 
     // function to shift spaces left
     let moveLeft = () => {
-
-        // loop through each row
         grid.forEach((row, rowIndex) => {
-            let lastEmptySpace = 0;
-            let lastNonEmptySpace = -1;
-            let lastNonEmptySpaceValue = -1;
+            let leftmostEmptySpace = -1;
+            let leftmostNonZeroSpace = -1;
+            let leftmostNonZeroSpaceValue = -1;
 
-            // loop through every space in each row
-            for (let space = 0; space < row.length; space++) {
+            for (let spaceIndex = 0; spaceIndex < row.length; spaceIndex++) {
 
-                // if the value of a space is 0
-                if (row[space] === 0) {
-                    // if no empty space has been determined yet
-                    if (lastEmptySpace === -1) {
-                        lastEmptySpace = space;
+                // if the current space is the first space
+                if (spaceIndex === 0) {
+                    // if it is a zero, mark it as the leftmost empty space
+                    if (row[spaceIndex] === 0) {
+                        leftmostEmptySpace = spaceIndex;
+                    }
+                    // if it is a non-zero value, set leftmost non-zero space and its corresponding value
+                    else {
+                        leftmostNonZeroSpace = spaceIndex;
+                        leftmostNonZeroSpaceValue = row[spaceIndex];
                     }
                 }
-
-                // if the value of a space is not 0
+                // if the current space is not the first space
                 else {
-
-                    // check if a non-empty space has been previously determined
-                    // if not, set current space and its value for potential merging
-                    if (lastNonEmptySpace === -1 && lastNonEmptySpaceValue === -1) {
-                        lastNonEmptySpace = space;
-                        lastNonEmptySpaceValue = row[space];
+                    // if the current space is a zero:
+                    if (row[spaceIndex] === 0) {
+                        // if there already is a leftmost empty space marked, do nothing
+                        // if there is no leftmost empty space marked, mark current space as leftmost empty space
+                        if (leftmostEmptySpace === -1) {
+                            leftmostEmptySpace = spaceIndex;
+                        }
                     }
-
-                    // if one has been previously determined, check if current non-empty space is the same value
+                    // if the current space is a non-zero value
                     else {
-                        if (lastNonEmptySpaceValue === row[space]) {
+                        // if there is a marked empty space, move the current space to the empty space
+                        if (leftmostEmptySpace !== -1) {
+                            // set the leftmost non-zero space to the space that is about to moved
+                            leftmostNonZeroSpace = leftmostEmptySpace;
+                            leftmostNonZeroSpaceValue = row[spaceIndex];
 
-                            // if there are empty spaces to the left of the merging space, move all to left when merging
-                            if (lastEmptySpace < lastNonEmptySpace) {
-                                setTileValue([rowIndex, lastEmptySpace], lastNonEmptySpaceValue * 2);
-                                // clear the two tiles that were to be merged
-                                setTileValue([rowIndex, lastNonEmptySpace], 0);
-                                setTileValue([rowIndex, row[space]], 0);
-                                // increment the last empty space by 1
-                                lastEmptySpace++;
+                            setTileValue([rowIndex, leftmostEmptySpace], row[spaceIndex]);
+                            setTileValue([rowIndex, spaceIndex], 0);
+
+
+                            leftmostEmptySpace++;
+                        }
+
+                        // if there is no marked leftmost non-zero space, mark the current space
+                        if (leftmostNonZeroSpace === -1 && leftmostNonZeroSpaceValue === -1) {
+                            leftmostNonZeroSpace = spaceIndex;
+                            leftmostNonZeroSpaceValue = row[spaceIndex];
+                        }
+                        // if there is a marked non-zero space:
+                        else {
+
+                            // if the marked non-zero space is the same value as the current space:
+                            if (leftmostNonZeroSpaceValue === row[spaceIndex]) {
+                                // double the leftmost non-zero space
+                                setTileValue([rowIndex, leftmostNonZeroSpace], leftmostNonZeroSpaceValue * 2);
+                                // clear the current space
+                                setTileValue([rowIndex, spaceIndex], 0);
+
+                                // set leftmost empty space to the space right after the merged space
+                                leftmostEmptySpace = leftmostNonZeroSpace + 1;
+                                // reset non-zero space marking
+                                leftmostNonZeroSpace = -1;
+                                leftmostNonZeroSpaceValue = -1;
                             }
 
-                            // if there are no empty spaces to the left of the merging space, simply merge the two tiles
+                            // if the marked non-zero space is different from the current space
                             else {
-                                setTileValue([rowIndex, lastNonEmptySpace], lastNonEmptySpaceValue * 2);
-                                // clear the tile to the right
-                                setTileValue([rowIndex, row[space]], 0);
-                                // set the last empty space to the now cleared tile
-                                lastEmptySpace = space;
+                                // if there are empty spaces between marked non-zero space and current space,
+                                // set leftmost empty space to value of current space, increment leftmost space by 1
+                                if (leftmostEmptySpace !== -1) {
+                                    setTileValue([rowIndex, leftmostEmptySpace], row[spaceIndex]);
+                                    setTileValue([rowIndex, spaceIndex], 0);
+                                }
                             }
                         }
                     }
-
-
                 }
             }
-        });
+        })
     }
 
     // function to shift spaces right
     let moveRight = () => {
 
     }
-
-    // function to merge two spaces if they are beside each other
 
     // NOTES:
     //    - somehow keep track of empty coordinates - repeatedly doing random and checking if value is 0 is silly
