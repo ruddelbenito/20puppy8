@@ -113,7 +113,7 @@ function Game() {
                     else {
                         // if there is a marked empty space, move the current space to the empty space
                         if (leftmostEmptySpace !== -1) {
-                            // set the leftmost non-zero space to the space that is about to moved
+                            // set the leftmost non-zero space to the space that is about to move
                             leftmostNonZeroSpace = leftmostEmptySpace;
                             leftmostNonZeroSpaceValue = row[spaceIndex];
 
