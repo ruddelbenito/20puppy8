@@ -4,7 +4,7 @@ import styles from './game.module.css'
 import { useState, useEffect } from 'react'
 
 function Game() {
-    const [grid, setGrid] = useState([[0, 2, 0, 2], [4, 0, 0, 0], [0, 0, 0, 0], [0, 0, 2, 0]]);
+    const [grid, setGrid] = useState([[2, 2, 2, 2], [4, 0, 0, 0], [0, 0, 0, 0], [0, 0, 2, 0]]);
 
     function checkKey(e) {
 
@@ -86,6 +86,8 @@ function Game() {
             let leftmostNonZeroSpaceValue = -1;
 
             for (let spaceIndex = 0; spaceIndex < row.length; spaceIndex++) {
+                console.log(`current spaceIndex: ${spaceIndex}`)
+
 
                 // if the current space is the first space
                 if (spaceIndex === 0) {
@@ -111,8 +113,9 @@ function Game() {
                     }
                     // if the current space is a non-zero value
                     else {
-                        // if there is a marked empty space, move the current space to the empty space
-                        if (leftmostEmptySpace !== -1) {
+                        // if there is a marked empty space AND no tile to merge, move the current space to the empty space
+                        if (leftmostEmptySpace !== -1 && leftmostNonZeroSpace === -1) {
+                            console.log(`moving ${spaceIndex} to ${leftmostEmptySpace}`)
                             // set the leftmost non-zero space to the space that is about to move
                             leftmostNonZeroSpace = leftmostEmptySpace;
                             leftmostNonZeroSpaceValue = row[spaceIndex];
@@ -158,6 +161,7 @@ function Game() {
                         }
                     }
                 }
+                console.log(`leftmostEmptySpace: ${leftmostEmptySpace}, leftmostNonZeroSpace: ${leftmostNonZeroSpace}, leftmostNonZeroSpaceValue: ${leftmostNonZeroSpaceValue}`)
             }
         })
     }
