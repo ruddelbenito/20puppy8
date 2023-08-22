@@ -4,7 +4,7 @@ import styles from './game.module.css'
 import { useState, useEffect } from 'react'
 
 function Game() {
-    const [grid, setGrid] = useState([[2, 2, 2, 2], [4, 0, 0, 0], [0, 0, 0, 0], [0, 0, 2, 0]]);
+    const [grid, setGrid] = useState([[4, 2, 2, 8], [4, 0, 0, 0], [0, 0, 16, 0], [0, 2, 0, 2]]);
 
     function checkKey(e) {
 
@@ -81,89 +81,90 @@ function Game() {
     // function to shift spaces left
     let moveLeft = () => {
         grid.forEach((row, rowIndex) => {
+            console.log(`row: ${rowIndex}`)
             let leftmostEmptySpace = -1;
             let leftmostNonZeroSpace = -1;
             let leftmostNonZeroSpaceValue = -1;
 
             for (let spaceIndex = 0; spaceIndex < row.length; spaceIndex++) {
-                console.log(`current spaceIndex: ${spaceIndex}`)
+                console.log(`current space: ${spaceIndex}`)
 
-
-                // if the current space is the first space
-                if (spaceIndex === 0) {
-                    // if it is a zero, mark it as the leftmost empty space
-                    if (row[spaceIndex] === 0) {
+                // if the current space is empty
+                if (row[spaceIndex] === 0) {
+                    // check if an empty space needs to be marked
+                    if (leftmostEmptySpace === -1) {
                         leftmostEmptySpace = spaceIndex;
                     }
-                    // if it is a non-zero value, set leftmost non-zero space and its corresponding value
-                    else {
-                        leftmostNonZeroSpace = spaceIndex;
-                        leftmostNonZeroSpaceValue = row[spaceIndex];
-                    }
                 }
-                // if the current space is not the first space
+                // if the current space is not empty
                 else {
-                    // if the current space is a zero:
-                    if (row[spaceIndex] === 0) {
-                        // if there already is a leftmost empty space marked, do nothing
-                        // if there is no leftmost empty space marked, mark current space as leftmost empty space
-                        if (leftmostEmptySpace === -1) {
-                            leftmostEmptySpace = spaceIndex;
-                        }
-                    }
-                    // if the current space is a non-zero value
-                    else {
-                        // if there is a marked empty space AND no tile to merge, move the current space to the empty space
-                        if (leftmostEmptySpace !== -1 && leftmostNonZeroSpace === -1) {
-                            console.log(`moving ${spaceIndex} to ${leftmostEmptySpace}`)
-                            // set the leftmost non-zero space to the space that is about to move
+                    // if there is no marked non-zero space yet
+                    if (leftmostNonZeroSpace === -1) {
+                        // if the current non-zero space can be moved to an empty spot, do so
+                        if (leftmostEmptySpace !== -1) {
+                            setTileValue([rowIndex, leftmostEmptySpace], row[spaceIndex])
                             leftmostNonZeroSpace = leftmostEmptySpace;
                             leftmostNonZeroSpaceValue = row[spaceIndex];
-
-                            setTileValue([rowIndex, leftmostEmptySpace], row[spaceIndex]);
+                            // clear the current space
                             setTileValue([rowIndex, spaceIndex], 0);
-
-
+                            // increment leftmost empty space by 1 if not at the end of row
                             leftmostEmptySpace++;
                         }
-
-                        // if there is no marked leftmost non-zero space, mark the current space
-                        if (leftmostNonZeroSpace === -1 && leftmostNonZeroSpaceValue === -1) {
+                        else {
                             leftmostNonZeroSpace = spaceIndex;
                             leftmostNonZeroSpaceValue = row[spaceIndex];
                         }
-                        // if there is a marked non-zero space:
-                        else {
-
-                            // if the marked non-zero space is the same value as the current space:
-                            if (leftmostNonZeroSpaceValue === row[spaceIndex]) {
-                                // double the leftmost non-zero space
-                                setTileValue([rowIndex, leftmostNonZeroSpace], leftmostNonZeroSpaceValue * 2);
-                                // clear the current space
-                                setTileValue([rowIndex, spaceIndex], 0);
-
-                                // set leftmost empty space to the space right after the merged space
+                    }
+                    // if a marked non-zero space exists
+                    else {
+                        // if the marked non-zero space and current space have the same value
+                        if (leftmostNonZeroSpaceValue === row[spaceIndex]) {
+                            leftmostNonZeroSpaceValue = leftmostNonZeroSpaceValue * 2;
+                            // double the leftmost non-zero space tile
+                            setTileValue([rowIndex, leftmostNonZeroSpace], leftmostNonZeroSpaceValue);
+                            // clear the current space
+                            setTileValue([rowIndex, spaceIndex], 0);
+                            // if a marked space does not exist, set leftmost empty space to leftmost non-zero space + 1
+                            // if a marked space already exists, leave it
+                            if (leftmostEmptySpace === -1) {
                                 leftmostEmptySpace = leftmostNonZeroSpace + 1;
-                                // reset non-zero space marking
-                                leftmostNonZeroSpace = -1;
-                                leftmostNonZeroSpaceValue = -1;
                             }
-
-                            // if the marked non-zero space is different from the current space
+                            // if a merge occurs, a merge with this new value can no longer be performed in this one move
+                            // therefore, reset non-zero value
+                            leftmostNonZeroSpace = -1;
+                            leftmostNonZeroSpaceValue = -1;
+                        }
+                        // if the marked non-zero space and current space have different values
+                        else {
+                            // if a marked empty space exists
+                            if (leftmostEmptySpace !== -1) {
+                                // set new leftmost non-zero space and its value
+                                leftmostNonZeroSpace = leftmostEmptySpace;
+                                leftmostNonZeroSpaceValue = row[spaceIndex];
+                                // move current space to empty space
+                                setTileValue([rowIndex, leftmostEmptySpace], row[spaceIndex]);
+                                // clear current space
+                                setTileValue([rowIndex, spaceIndex], 0);
+                                // increment leftmost empty space by 1;
+                                leftmostEmptySpace++;
+                            }
+                            // if no marked empty space exists, set leftmost non-zero space to current space
                             else {
-                                // if there are empty spaces between marked non-zero space and current space,
-                                // set leftmost empty space to value of current space, increment leftmost space by 1
-                                if (leftmostEmptySpace !== -1) {
-                                    setTileValue([rowIndex, leftmostEmptySpace], row[spaceIndex]);
-                                    setTileValue([rowIndex, spaceIndex], 0);
-                                }
+                                leftmostNonZeroSpace = spaceIndex;
+                                leftmostNonZeroSpaceValue = row[spaceIndex];
                             }
                         }
                     }
                 }
-                console.log(`leftmostEmptySpace: ${leftmostEmptySpace}, leftmostNonZeroSpace: ${leftmostNonZeroSpace}, leftmostNonZeroSpaceValue: ${leftmostNonZeroSpaceValue}`)
-            }
-        })
+                console.log(`current leftmostEmptySpace: ${leftmostEmptySpace}`)
+                console.log(`current leftmostNonZeroSpace: ${leftmostNonZeroSpace}`)
+                console.log(`current leftmostNonZeroSpaceValue: ${leftmostNonZeroSpaceValue}`)
+            };
+
+            console.log(`leftmostEmptySpace: ${leftmostEmptySpace}`)
+            console.log(`leftmostNonZeroSpace: ${leftmostNonZeroSpace}`)
+            console.log(`leftmostNonZeroSpaceValue: ${leftmostNonZeroSpaceValue}`)
+        });
     }
 
     // function to shift spaces right
