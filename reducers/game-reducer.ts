@@ -1,10 +1,12 @@
-import { Tile } from "@/models/tile";
+import { isNil } from "lodash";
+import { tileCountPerDimension } from "@/constants";
+import { Tile, TileMap } from "@/models/tile";
 import { uid } from "uid";
 
-type State = { board: string[][]; tiles: { [id: string]: Tile } };
-type Action = { type: "create_tile"; tile: Tile };
+type State = { board: string[][]; tiles: TileMap };
+type Action = { type: "create_tile"; tile: Tile } | { type: "move_up"} | {type: "move_down"};
 
-function createBoard(tileCountPerDimension: number = 4) {
+function createBoard() {
   const board: string[][] = [];
 
   for (let index = 0; index < tileCountPerDimension; index++) {
@@ -32,6 +34,64 @@ function gameReducer(state: State = initialState, action: Action) {
           [tileId]: action.tile,
         },
       };
+    }
+
+    case "move_up": {
+      const newBoard = createBoard();
+      const newTiles: TileMap = {};
+
+      for (let x = 0; x < tileCountPerDimension; x++) {
+        let newY = 0;
+
+        for (let y = 0; y < tileCountPerDimension; y++) {
+          const tileId = state.board[y][x];
+
+          if (!isNil(tileId)) {
+            newBoard[newY][x] = tileId;
+            newTiles[tileId]= {
+              ...state.tiles[tileId],
+              position: [x, newY],
+            }
+
+            newY++;
+          }
+        }
+      }
+
+      return {
+        ...state,
+        board: newBoard,
+        tiles: newTiles,
+      }
+    }
+
+    case "move_down": {
+      const newBoard = createBoard();
+      const newTiles: TileMap = {};
+
+      for (let x = 0; x < tileCountPerDimension; x++) {
+        let newY = tileCountPerDimension - 1;
+
+        for (let y = 0; y < tileCountPerDimension; y++) {
+          const tileId = state.board[y][x];
+
+          if (!isNil(tileId)) {
+            newBoard[newY][x] = tileId;
+            newTiles[tileId]= {
+              ...state.tiles[tileId],
+              position: [x, newY],
+            }
+
+            newY--;
+          }
+        }
+      }
+
+      return {
+        ...state,
+        board: newBoard,
+        tiles: newTiles,
+      }
     }
 
     default: {

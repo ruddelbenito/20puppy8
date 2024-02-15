@@ -8,6 +8,20 @@ function Board() {
   const [gameState, dispatch] = useReducer(gameReducer, initialState);
   const initialized = useRef(false);
 
+  const handleKeyDown = (e: KeyboardEvent) => {
+    e.preventDefault();
+
+    switch (e.code) {
+      case "ArrowUp":
+        dispatch({ type: "move_up" });
+        break;
+
+      case "ArrowDown":
+        dispatch({ type: "move_down" });
+        break;
+    }
+  }
+
   const renderGrid = () => {
     const cells: JSX.Element[] = [];
     const totalCellsCount = 16;
@@ -32,6 +46,14 @@ function Board() {
       dispatch({ type: "create_tile", tile: { position: [0, 1], value: 2 } });
       dispatch({ type: "create_tile", tile: { position: [0, 2], value: 2 } });
       initialized.current = true;
+    }
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
     }
   }, []);
 
