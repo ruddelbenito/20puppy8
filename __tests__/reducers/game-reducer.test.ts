@@ -45,7 +45,7 @@ describe("gameReducer", () => {
       act(() => {
         dispatch({ type: "create_tile", tile: tile1 });
         dispatch({ type: "create_tile", tile: tile2 });
-      })
+      });
 
       const [stateBefore] = result.current;
       expect(isNil(stateBefore.board[0][0])).toBeTruthy();
@@ -62,7 +62,7 @@ describe("gameReducer", () => {
       expect(typeof stateAfter.board[0][1]).toBe("string");
       expect(isNil(stateAfter.board[1][0])).toBeTruthy();
       expect(isNil(stateAfter.board[3][1])).toBeTruthy();
-    })
+    });
   });
 
   describe("move_down", () => {
@@ -84,7 +84,7 @@ describe("gameReducer", () => {
       act(() => {
         dispatch({ type: "create_tile", tile: tile1 });
         dispatch({ type: "create_tile", tile: tile2 });
-      })
+      });
 
       const [stateBefore] = result.current;
       expect(isNil(stateBefore.board[0][0])).toBeTruthy();
@@ -99,6 +99,6 @@ describe("gameReducer", () => {
       expect(typeof stateAfter.board[3][0]).toBe("string");
       expect(typeof stateAfter.board[3][1]).toBe("string");
       expect(isNil(stateAfter.board[1][0])).toBeTruthy();
-    })
+    });
   });
 });

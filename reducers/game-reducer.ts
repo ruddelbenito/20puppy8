@@ -4,7 +4,10 @@ import { Tile, TileMap } from "@/models/tile";
 import { uid } from "uid";
 
 type State = { board: string[][]; tiles: TileMap };
-type Action = { type: "create_tile"; tile: Tile } | { type: "move_up"} | {type: "move_down"};
+type Action =
+  | { type: "create_tile"; tile: Tile }
+  | { type: "move_up" }
+  | { type: "move_down" };
 
 function createBoard() {
   const board: string[][] = [];
@@ -48,10 +51,10 @@ function gameReducer(state: State = initialState, action: Action) {
 
           if (!isNil(tileId)) {
             newBoard[newY][x] = tileId;
-            newTiles[tileId]= {
+            newTiles[tileId] = {
               ...state.tiles[tileId],
               position: [x, newY],
-            }
+            };
 
             newY++;
           }
@@ -62,7 +65,7 @@ function gameReducer(state: State = initialState, action: Action) {
         ...state,
         board: newBoard,
         tiles: newTiles,
-      }
+      };
     }
 
     case "move_down": {
@@ -77,10 +80,10 @@ function gameReducer(state: State = initialState, action: Action) {
 
           if (!isNil(tileId)) {
             newBoard[newY][x] = tileId;
-            newTiles[tileId]= {
+            newTiles[tileId] = {
               ...state.tiles[tileId],
               position: [x, newY],
-            }
+            };
 
             newY--;
           }
@@ -91,7 +94,7 @@ function gameReducer(state: State = initialState, action: Action) {
         ...state,
         board: newBoard,
         tiles: newTiles,
-      }
+      };
     }
 
     default: {

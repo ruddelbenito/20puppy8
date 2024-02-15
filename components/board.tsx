@@ -20,7 +20,7 @@ function Board() {
         dispatch({ type: "move_down" });
         break;
     }
-  }
+  };
 
   const renderGrid = () => {
     const cells: JSX.Element[] = [];
@@ -54,7 +54,7 @@ function Board() {
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
-    }
+    };
   }, []);
 
   return (
