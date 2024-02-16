@@ -28,6 +28,8 @@ function Board() {
         dispatch({ type: "move_right" });
         break;
     }
+
+    dispatch({ type: "clean_up" });
   };
 
   const renderGrid = () => {
