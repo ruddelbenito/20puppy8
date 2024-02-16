@@ -19,6 +19,14 @@ function Board() {
       case "ArrowDown":
         dispatch({ type: "move_down" });
         break;
+
+      case "ArrowLeft":
+        dispatch({ type: "move_left" });
+        break;
+
+      case "ArrowRight":
+        dispatch({ type: "move_right" });
+        break;
     }
   };
 
