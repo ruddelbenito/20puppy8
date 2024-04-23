@@ -1,15 +1,15 @@
 import styles from "@/styles/board.module.css";
 import Tile from "./tile";
-import { useEffect, useReducer, useRef } from "react";
-import gameReducer, { initialState } from "@/reducers/game-reducer";
+import { useCallback, useContext, useEffect, useRef } from "react";
 import { Tile as TileModel } from "@/models/tile";
 import { mergeAnimationDuration } from "@/constants";
+import { GameContext } from "@/context/game-context";
 
 function Board() {
-  const [gameState, dispatch] = useReducer(gameReducer, initialState);
+  const { appendRandomTile, gameState, dispatch } = useContext(GameContext);
   const initialized = useRef(false);
 
-  const handleKeyDown = (e: KeyboardEvent) => {
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
     e.preventDefault();
 
     switch (e.code) {
@@ -30,8 +30,11 @@ function Board() {
         break;
     }
 
-    setTimeout(() => {dispatch({ type: "clean_up" })}, mergeAnimationDuration);
-  };
+    setTimeout(() => {
+      dispatch({ type: "clean_up" })
+      appendRandomTile()
+    }, mergeAnimationDuration);
+  }, [appendRandomTile, dispatch]);
 
   const renderGrid = () => {
     const cells: JSX.Element[] = [];
@@ -58,7 +61,7 @@ function Board() {
       dispatch({ type: "create_tile", tile: { position: [0, 2], value: 2 } });
       initialized.current = true;
     }
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
@@ -66,7 +69,7 @@ function Board() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, []);
+  }, [handleKeyDown]);
 
   return (
     <div className={styles.board}>
