@@ -1,10 +1,17 @@
-import { tileCountPerDimension } from "@/constants";
+import { mergeAnimationDuration, tileCountPerDimension } from "@/constants";
 import { Tile } from "@/models/tile";
 import gameReducer, { initialState } from "@/reducers/game-reducer";
-import { isNil } from "lodash";
-import { PropsWithChildren, createContext, useReducer } from "react";
+import { isNil, throttle } from "lodash";
+import { PropsWithChildren, createContext, useCallback, useEffect, useReducer } from "react";
 
-export const GameContext = createContext({ appendRandomTile: () => {}, getTiles: () => [] as Tile[], dispatch: (_: any) => {} });
+type MoveDirection = "move_up" | "move_down" | "move_left" | "move_right";
+
+export const GameContext = createContext({
+  appendRandomTile: () => {},
+  getTiles: () => [] as Tile[],
+  moveTiles: (_: MoveDirection) => {},
+  startGame: () => {},
+});
 
 export default function GameProvider({ children }: PropsWithChildren) {
   const [gameState, dispatch] = useReducer(gameReducer, initialState);
@@ -41,5 +48,23 @@ export default function GameProvider({ children }: PropsWithChildren) {
     return gameState.tilesByIds.map((tileId: string) => gameState.tiles[tileId]);
   }
 
-  return <GameContext.Provider value={{ appendRandomTile, getTiles, dispatch }}>{children}</GameContext.Provider>
+  const moveTiles = useCallback(throttle((type: MoveDirection) => {
+    dispatch({ type })
+  }, mergeAnimationDuration * 1.05, { trailing: false }), [dispatch])
+
+  const startGame = () => {
+    dispatch({ type: "create_tile", tile: { position: [0, 1], value: 2 } });
+    dispatch({ type: "create_tile", tile: { position: [0, 2], value: 2 } });
+  }
+
+  useEffect(() => {
+    if (gameState.hasChanged) {
+      setTimeout(() => {
+        dispatch({ type: "clean_up" })
+        appendRandomTile()
+      }, mergeAnimationDuration);
+    }
+  }, [gameState.hasChanged]);
+
+  return <GameContext.Provider value={{ appendRandomTile, getTiles, moveTiles, startGame }}>{children}</GameContext.Provider>
 }
