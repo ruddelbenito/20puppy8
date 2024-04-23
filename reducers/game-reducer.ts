@@ -3,7 +3,7 @@ import { tileCountPerDimension } from "@/constants";
 import { Tile, TileMap } from "@/models/tile";
 import { uid } from "uid";
 
-type State = { board: string[][]; tiles: TileMap };
+type State = { board: string[][]; tiles: TileMap; tilesByIds: string[] };
 type Action =
   | { type: "create_tile"; tile: Tile }
   | { type: "move_up" }
@@ -22,7 +22,7 @@ function createBoard() {
   return board;
 }
 
-export const initialState: State = { board: createBoard(), tiles: {} };
+export const initialState: State = { board: createBoard(), tiles: {}, tilesByIds: [] };
 
 function gameReducer(state: State = initialState, action: Action) {
   switch (action.type) {
@@ -45,6 +45,7 @@ function gameReducer(state: State = initialState, action: Action) {
       return {
         ...state,
         tiles: newTiles,
+        tilesByIds: Object.keys(newTiles)
       };
     }
 
@@ -61,6 +62,7 @@ function gameReducer(state: State = initialState, action: Action) {
           ...state.tiles,
           [tileId]: { id: tileId, ...action.tile },
         },
+        tilesByIds: [...state.tilesByIds, tileId]
       };
     }
 
@@ -119,7 +121,7 @@ function gameReducer(state: State = initialState, action: Action) {
         let newY = tileCountPerDimension - 1;
         let previousTile: Tile | undefined;
 
-        for (let y = 0; y < tileCountPerDimension; y++) {
+        for (let y = tileCountPerDimension - 1; y >= 0; y--) {
           const tileId = state.board[y][x];
           const currentTile = state.tiles[tileId];
 
@@ -202,7 +204,7 @@ function gameReducer(state: State = initialState, action: Action) {
         let newX = tileCountPerDimension - 1;
         let previousTile: Tile | undefined;
 
-        for (let x = 0; x < tileCountPerDimension; x++) {
+        for (let x = tileCountPerDimension - 1; x >= 0; x--) {
           const tileId = state.board[y][x];
           const currentTile = state.tiles[tileId];
 
