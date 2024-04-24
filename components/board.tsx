@@ -11,20 +11,31 @@ function Board() {
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     e.preventDefault();
 
-    switch (e.code) {
+    switch (e.key) {
       case "ArrowUp":
+        moveTiles("move_up");
+        break;
+      case "w":
         moveTiles("move_up");
         break;
 
       case "ArrowDown":
         moveTiles("move_down");
         break;
+      case "s":
+        moveTiles("move_down");
 
       case "ArrowLeft":
         moveTiles("move_left");
         break;
+      case "a":
+        moveTiles("move_left");
+        break;
 
       case "ArrowRight":
+        moveTiles("move_right");
+        break;
+      case "d":
         moveTiles("move_right");
         break;
     }
