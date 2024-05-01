@@ -3,6 +3,7 @@ import Tile from "./tile";
 import { useCallback, useContext, useEffect, useRef } from "react";
 import { Tile as TileModel } from "@/models/tile";
 import { GameContext } from "@/context/game-context";
+import MobileSwiper, { SwipeInput } from "./mobile-swiper";
 
 function Board() {
   const { getTiles, moveTiles, startGame } = useContext(GameContext);
@@ -41,6 +42,25 @@ function Board() {
     }
   }, [moveTiles]);
 
+  const handleSwipe = useCallback(({ deltaX, deltaY }: SwipeInput) => {
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+      if (deltaX > 0) {
+        moveTiles("move_right");
+      }
+      else {
+        moveTiles("move_left");
+      }
+    }
+    else {
+      if (deltaY > 0) {
+        moveTiles("move_down");
+      }
+      else {
+        moveTiles("move_up");
+      }
+    }
+  }, [moveTiles])
+
   const renderGrid = () => {
     const cells: JSX.Element[] = [];
     const totalCellsCount = 16;
@@ -76,10 +96,13 @@ function Board() {
   }, [handleKeyDown]);
 
   return (
-    <div className={styles.board}>
-      <div className={styles.tiles}>{renderTiles()}</div>
-      <div className={styles.grid}>{renderGrid()}</div>
-    </div>
+    <MobileSwiper onSwipe={handleSwipe}>
+      <div className={styles.board}>
+        <div className={styles.tiles}>{renderTiles()}</div>
+        <div className={styles.grid}>{renderGrid()}</div>
+      </div>
+    </MobileSwiper>
+
   );
 }
 
