@@ -7,4 +7,4 @@ export const containerWidthDesktop = 464;
 // Animation constants
 //  - in ms
 export const mergeAnimationDuration = 100;
-export const moveAnimationDuration = 200;
+export const moveAnimationDuration = 75;
