@@ -1,7 +1,8 @@
 export const tileCountPerDimension = 4;
 
 //  containerWidth value is in pixels
-export const containerWidth = 288;
+export const containerWidthMobile = 288;
+export const containerWidthDesktop = 464;
 
 // Animation constants
 //  - in ms

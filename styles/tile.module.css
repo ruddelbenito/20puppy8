@@ -14,7 +14,17 @@
   transition-duration: 200ms, 200ms, 100ms;
 }
 
-/* START OF TEXT COLOR */
+@media (min-width: 512px) {
+  .tile {
+    width: calc(var(--pixel-size) * 12.5);
+    height: calc(var(--pixel-size) * 12.5);
+    margin: calc(var(--pixel-size) * 1);
+    font-size: calc(var(--pixel-size) * 6);
+    line-height: calc(var(--pixel-size) * 12.5);
+  }
+}
+
+/* -=-=-=- START OF TEXT COLOR -=-=-=- */
 .tile8,
 .tile16,
 .tile32,
@@ -29,9 +39,9 @@
   color: var(--secondary-text-color);
 }
 
-/* END OF TEXT COLOR */
+/* -=-=-=-= END OF TEXT COLOR =-=-=-=- */
 
-/* START OF TEXT SIZE */
+/* -=-=-=- START OF TEXT SIZE -=-=-=- */
 .tile128,
 .tile256,
 .tile512 {
@@ -45,7 +55,23 @@
   font-size: calc(var(--pixel-size) * 2.75);
 }
 
-/* END OF TEXT SIZE */
+@media (min-width: 512px) {
+
+  .tile128,
+  .tile256,
+  .tile512 {
+    font-size: calc(var(--pixel-size) * 5.5);
+  }
+
+  .tile1024,
+  .tile2048,
+  .tile4096,
+  .tile8192 {
+    font-size: calc(var(--pixel-size) * 4);
+  }
+}
+
+/* -=-=-=-= END OF TEXT SIZE =-=-=-=- */
 
 .tile2 {
   box-shadow:
@@ -73,25 +99,28 @@
 }
 
 .tile64 {
-  background-color: #f65e3b;
+  background: #f65e3b;
 }
 
 .tile128 {
   background: #edcf72;
   box-shadow:
-    0 0 3px 10px rgba(243, 215, 116, 0.2381) inset 0 0 0 1px rgba(255, 255, 255, 0.14286);
+    0 0 30px 10px rgba(243, 215, 116, 0.2381),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.14286);
 }
 
 .tile256 {
   background: #edcc61;
   box-shadow:
-    0 0 30px 10px rgba(243, 215, 116, 0.31746) inset 0 0 0 1px rgba(255, 255, 255, 0.19048);
+    0 0 30px 10px rgba(243, 215, 116, 0.31746),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.19048);
 }
 
 .tile512 {
   background: #edc850;
   box-shadow:
-    0 0 30px 10x rgba(243, 215, 116, 0.39683) inset 0 0 0 1px rgba(255, 255, 255, 0.2381);
+    0 0 30px 10px rgba(243, 215, 116, 0.39683),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.2381);
 }
 
 .tile1024 {

@@ -7,7 +7,7 @@ import { PropsWithChildren, createContext, useCallback, useEffect, useReducer } 
 type MoveDirection = "move_up" | "move_down" | "move_left" | "move_right";
 
 export const GameContext = createContext({
-  appendRandomTile: () => {},
+  score: 0,
   getTiles: () => [] as Tile[],
   moveTiles: (_: MoveDirection) => {},
   startGame: () => {},
@@ -66,5 +66,5 @@ export default function GameProvider({ children }: PropsWithChildren) {
     }
   }, [gameState.hasChanged]);
 
-  return <GameContext.Provider value={{ appendRandomTile, getTiles, moveTiles, startGame }}>{children}</GameContext.Provider>
+  return <GameContext.Provider value={{ score: gameState.score, getTiles, moveTiles, startGame }}>{children}</GameContext.Provider>
 }

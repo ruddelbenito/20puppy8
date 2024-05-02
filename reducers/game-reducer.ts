@@ -3,7 +3,7 @@ import { tileCountPerDimension } from "@/constants";
 import { Tile, TileMap } from "@/models/tile";
 import { uid } from "uid";
 
-type State = { board: string[][]; tiles: TileMap; tilesByIds: string[]; hasChanged: boolean };
+type State = { board: string[][]; tiles: TileMap; tilesByIds: string[]; hasChanged: boolean; score: number;};
 type Action =
   | { type: "create_tile"; tile: Tile }
   | { type: "move_up" }
@@ -27,6 +27,7 @@ export const initialState: State = {
   tiles: {},
   tilesByIds: [],
   hasChanged: false,
+  score: 0,
 };
 
 function gameReducer(state: State = initialState, action: Action) {
@@ -76,6 +77,7 @@ function gameReducer(state: State = initialState, action: Action) {
       const newBoard = createBoard();
       const newTiles: TileMap = {};
       let hasChanged = false;
+      let { score } = state;
 
       for (let x = 0; x < tileCountPerDimension; x++) {
         let newY = 0;
@@ -87,6 +89,7 @@ function gameReducer(state: State = initialState, action: Action) {
 
           if (!isNil(tileId)) {
             if (previousTile?.value === currentTile.value) {
+              score += previousTile.value * 2;
               newTiles[previousTile.id as string] = {
                 ...previousTile,
                 value: previousTile.value * 2,
@@ -123,6 +126,7 @@ function gameReducer(state: State = initialState, action: Action) {
         board: newBoard,
         tiles: newTiles,
         hasChanged,
+        score,
       };
     }
 
@@ -130,6 +134,7 @@ function gameReducer(state: State = initialState, action: Action) {
       const newBoard = createBoard();
       const newTiles: TileMap = {};
       let hasChanged = false;
+      let { score } = state;
 
       for (let x = 0; x < tileCountPerDimension; x++) {
         let newY = tileCountPerDimension - 1;
@@ -141,6 +146,7 @@ function gameReducer(state: State = initialState, action: Action) {
 
           if (!isNil(tileId)) {
             if (previousTile?.value === currentTile.value) {
+              score += previousTile.value * 2;
               newTiles[previousTile.id as string] = {
                 ...previousTile,
                 value: previousTile.value * 2,
@@ -176,6 +182,7 @@ function gameReducer(state: State = initialState, action: Action) {
         board: newBoard,
         tiles: newTiles,
         hasChanged,
+        score,
       };
     }
 
@@ -183,6 +190,7 @@ function gameReducer(state: State = initialState, action: Action) {
       const newBoard = createBoard();
       const newTiles: TileMap = {};
       let hasChanged = false;
+      let { score } = state;
 
       for (let y = 0; y < tileCountPerDimension; y++) {
         let newX = 0;
@@ -194,6 +202,7 @@ function gameReducer(state: State = initialState, action: Action) {
 
           if (!isNil(tileId)) {
             if (previousTile?.value === currentTile.value) {
+              score += previousTile.value * 2;
               newTiles[previousTile.id as string] = {
                 ...previousTile,
                 value: previousTile.value * 2,
@@ -229,6 +238,7 @@ function gameReducer(state: State = initialState, action: Action) {
         board: newBoard,
         tiles: newTiles,
         hasChanged,
+        score,
       };
     }
 
@@ -236,6 +246,7 @@ function gameReducer(state: State = initialState, action: Action) {
       const newBoard = createBoard();
       const newTiles: TileMap = {};
       let hasChanged = false;
+      let { score } = state;
 
       for (let y = 0; y < tileCountPerDimension; y++) {
         let newX = tileCountPerDimension - 1;
@@ -247,6 +258,7 @@ function gameReducer(state: State = initialState, action: Action) {
 
           if (!isNil(tileId)) {
             if (previousTile?.value === currentTile.value) {
+              score += previousTile.value * 2;
               newTiles[previousTile.id as string] = {
                 ...previousTile,
                 value: previousTile.value * 2,
@@ -282,6 +294,7 @@ function gameReducer(state: State = initialState, action: Action) {
         board: newBoard,
         tiles: newTiles,
         hasChanged,
+        score,
       };
     }
 
