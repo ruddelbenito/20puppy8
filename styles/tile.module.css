@@ -77,6 +77,10 @@
   box-shadow:
     0 0 30px 10px rgba(243, 215, 116, 0),
     inset 0 0 0 1px rgba(255, 255, 255, 0);
+  background-image: url('../public/assets/charles-deluvio.jpg');
+  background-size: cover;
+  background-position-y: -2rem;
+  color: rgb(255, 255, 255, 0.35);
 }
 
 .tile4 {
@@ -84,6 +88,10 @@
   box-shadow:
     0 0 30px 10px rgba(243, 215, 116, 0),
     inset 0 0 0 1px rgba(255, 255, 255, 0);
+  background-image: url('../public/assets/mark-bishop.jpg');
+  background-size: cover;
+  background-position-x: -1.5rem;
+  color: rgb(255, 255, 255, 0.5);
 }
 
 .tile8 {
