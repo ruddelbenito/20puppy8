@@ -146,3 +146,83 @@
     0 0 30px 10px rgba(243, 215, 116, 0.55556),
     inset 0 0 0 1px rgba(255, 255, 255, 0.33333);
 }
+
+/* Pictures */
+.tile2 {
+  background-image: url('../public/assets/charles-deluvio.jpg');
+  background-size: 125%;
+  background-position-x: -0.5rem;
+  background-position-y: -1.85rem;
+  color: rgb(255, 255, 255, 0.5);
+}
+
+.tile4 {
+  background-image: url('../public/assets/mark-bishop.jpg');
+  background-size: cover;
+  background-position-x: -1rem;
+  color: rgb(255, 255, 255, 0.75);
+}
+
+.tile8 {
+  background-image: url('../public/assets/haoward-nguyen.jpg');
+  background-size: 135%;
+  background-position-x: -0.75rem;
+  background-position-y: -1.75rem;
+  color: rgb(255, 255, 255, 0.75);
+}
+
+.tile16 {
+  background-image: url('../public/assets/taylor-kopel.jpg');
+  background-size: 200%;
+  background-position-x: -2rem;
+  background-position-y: -1.75rem;
+  color: rgb(255, 255, 255, 0.75);
+}
+
+.tile32 {
+  background-image: url('../public/assets/karsten-winegeart.jpg');
+  background-size: 275%;
+  background-position-x: -3.5rem;
+  background-position-y: -4rem;
+  color: rgb(255, 255, 255, 0.75);
+}
+
+.tile64 {
+  background-image: url('../public/assets/alvan-nee.jpg');
+  background-size: 250%;
+  background-position-x: -2.85rem;
+  background-position-y: -3.75rem;
+  color: rgb(255, 255, 255, 0.5);
+}
+
+.tile128 {
+  background-image: url('../public/assets/olga-andreyanova.jpg');
+  background-size: 250%;
+  background-position-x: -3.5rem;
+  background-position-y: -3.5rem;
+  color: rgb(255, 255, 255, 0.65);
+}
+
+.tile256 {
+  background-image: url('../public/assets/david-clarke.jpg');
+  background-size: 175%;
+  background-position-x: -0.5rem;
+  background-position-y: -1.5rem;
+  color: rgb(255, 255, 255, 0.65);
+}
+
+.tile512 {
+  background-image: url('../public/assets/jamie-street.jpg');
+  background-size: 200%;
+  background-position-x: -1.65rem;
+  background-position-y: -3.65rem;
+  color: rgb(255, 255, 255, 0.65);
+}
+
+.tile1024 {
+  background-image: url('../public/assets/nataliia-kvitovska.jpg');
+  background-size: 200%;
+  background-position-x: -2.25rem;
+  background-position-y: -1.5rem;
+  color: rgb(255, 255, 255, 0.65);
+}
