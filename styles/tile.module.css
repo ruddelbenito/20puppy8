@@ -264,3 +264,35 @@
   background-position-y: -4.75rem;
   color: rgb(255, 255, 255, 0.75);
 }
+
+.tile16384 {
+  background-image: url('../public/assets/karsten-winegeart-2.jpg');
+  background-size: 225%;
+  background-position-x: -2.5rem;
+  background-position-y: -3rem;
+  color: rgb(255, 255, 255, 0.75);
+}
+
+.tile32768 {
+  background-image: url('../public/assets/chris-arthur-collins.jpg');
+  background-size: 225%;
+  background-position-x: -1.1rem;
+  background-position-y: -0.5rem;
+  color: rgb(255, 255, 255, 0.75);
+}
+
+.tile65536 {
+  background-image: url('../public/assets/jordan-bigelow.jpg');
+  background-size: 525%;
+  background-position-x: -5.5rem;
+  background-position-y: -3rem;
+  color: rgb(255, 255, 255, 0.75);
+}
+
+.tile131072 {
+  background-image: url('../public/assets/erda-estremera.jpg');
+  background-size: 350%;
+  background-position-x: -5rem;
+  background-position-y: -6.75rem;
+  color: rgb(255, 255, 255, 0.75);
+}
