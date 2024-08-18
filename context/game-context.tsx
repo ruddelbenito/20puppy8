@@ -55,6 +55,7 @@ export default function GameProvider({ children }: PropsWithChildren) {
   const startGame = () => {
     dispatch({ type: "create_tile", tile: { position: [0, 1], value: 2 } });
     dispatch({ type: "create_tile", tile: { position: [0, 2], value: 2 } });
+    dispatch({ type: "create_tile", tile: { position: [0, 2], value: 16384 } });
   }
 
   useEffect(() => {

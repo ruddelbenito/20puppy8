@@ -55,6 +55,13 @@
   font-size: calc(var(--pixel-size) * 2.75);
 }
 
+.tile16384,
+.tile32768,
+.tile65536,
+.tile131072 {
+  font-size: calc(var(--pixel-size) * 2.25);
+}
+
 @media (min-width: 512px) {
 
   .tile128,
@@ -68,6 +75,13 @@
   .tile4096,
   .tile8192 {
     font-size: calc(var(--pixel-size) * 4);
+  }
+
+  .tile16384,
+  .tile32768,
+  .tile65536,
+  .tile131072 {
+    font-size: calc(var(--pixel-size) * 3.5);
   }
 }
 
@@ -233,4 +247,20 @@
   background-position-x: -3.2rem;
   background-position-y: -8.25rem;
   color: rgb(255, 255, 255, 0.85);
+}
+
+.tile4096 {
+  background-image: url('../public/assets/wannes-de-mol.jpg');
+  background-size: 265%;
+  background-position-x: -3.5rem;
+  background-position-y: -3rem;
+  color: rgb(255, 255, 255, 0.75);
+}
+
+.tile8192 {
+  background-image: url('../public/assets/stephanie-tuohy.jpg');
+  background-size: 250%;
+  background-position-x: -3.5rem;
+  background-position-y: -4.75rem;
+  color: rgb(255, 255, 255, 0.75);
 }
